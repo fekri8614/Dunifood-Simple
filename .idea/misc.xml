@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/drawable/shape_background_top.xml" value="0.2005" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/drawable/shape_circle.xml" value="0.2005" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/item_food.xml" value="0.5" />
       </map>
     </option>
   </component>

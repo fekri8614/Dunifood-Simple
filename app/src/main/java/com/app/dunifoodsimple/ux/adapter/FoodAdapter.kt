@@ -84,19 +84,27 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
         notifyItemInserted( 0 )
 
     }
-
     fun deleteFood( oldFood: Food, oldPosition: Int ) {
         // remove item from list :
         data.remove( oldFood )
         notifyItemRemoved( oldPosition )
 
     }
-
     fun updateFood(newFood: Food, position: Int) {
         //update item from list :
         data[position] = newFood
         notifyItemChanged( position )
     }
+    fun setData(newList: ArrayList<Food>) {
+
+        // set new data to list :
+        data.clear()
+        data.addAll( newList )
+
+        notifyDataSetChanged()
+
+    }
+
 
     interface FoodEvents {
 
@@ -108,6 +116,8 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
         fun onFoodClicked(food: Food, position: Int)
 
         fun onFoodLonClicked( food: Food, position: Int )
+
+
 
     }
 

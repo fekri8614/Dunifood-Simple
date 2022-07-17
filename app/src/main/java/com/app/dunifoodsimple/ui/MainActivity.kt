@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dunifoodsimple.databinding.ActivityMainBinding
@@ -14,8 +15,8 @@ import com.app.dunifoodsimple.ux.adapter.FoodAdapter
 import com.app.dunifoodsimple.ux.dataclass.Food
 
 class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
-    lateinit var binding: ActivityMainBinding
-    lateinit var myAdapter: FoodAdapter
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var myAdapter: FoodAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -199,6 +200,27 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
 
         }
 
+        binding.edtSearch.addTextChangedListener { editTextInput ->
+
+            if (editTextInput!!.isNotEmpty()) {
+                // filter data 'h'
+                val cloneList = foodList.clone() as ArrayList<Food>
+                val filteredList = cloneList.filter { foodItem ->
+                    foodItem.txtSubject.contains( editTextInput )
+                }
+
+                myAdapter.setData( ArrayList( filteredList ) )
+
+
+            } else {
+                // show our data :
+
+                myAdapter.setData(foodList.clone() as ArrayList<Food>)
+
+            }
+
+        }
+
     }
 
     override fun onFoodClicked(food: Food, position: Int) {
@@ -210,10 +232,10 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         dialog.setCancelable(true)
         dialog.show()
 
-        dialogUpdateItemBinding.dialogEdtFoodName.setText( food.txtSubject )
-        dialogUpdateItemBinding.dialogEdtFoodCity.setText( food.txtCity )
-        dialogUpdateItemBinding.dialogEdtFoodDistance.setText( food.txtDistance )
-        dialogUpdateItemBinding.dialogEdtFoodPrice.setText( food.txtPrice )
+        dialogUpdateItemBinding.dialogEdtFoodName.setText(food.txtSubject)
+        dialogUpdateItemBinding.dialogEdtFoodCity.setText(food.txtCity)
+        dialogUpdateItemBinding.dialogEdtFoodDistance.setText(food.txtDistance)
+        dialogUpdateItemBinding.dialogEdtFoodPrice.setText(food.txtPrice)
 
         dialogUpdateItemBinding.dialogUpdateBtnCancel.setOnClickListener {
             dialog.dismiss()
@@ -226,7 +248,7 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                 dialogUpdateItemBinding.dialogEdtFoodCity.length() > 0 &&
                 dialogUpdateItemBinding.dialogEdtFoodDistance.length() > 0 &&
                 dialogUpdateItemBinding.dialogEdtFoodPrice.length() > 0
-            ){
+            ) {
 
                 val txtName = dialogUpdateItemBinding.dialogEdtFoodName.text.toString()
                 val txtPrice = dialogUpdateItemBinding.dialogEdtFoodPrice.text.toString()
@@ -234,10 +256,18 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                 val txtCity = dialogUpdateItemBinding.dialogEdtFoodCity.text.toString()
 
                 //create new food to add to recyclerview
-                val newFood = Food( txtName, txtPrice, txtDistance, txtCity, food.urlImage, food.numOfRating, food.rating )
+                val newFood = Food(
+                    txtName,
+                    txtPrice,
+                    txtDistance,
+                    txtCity,
+                    food.urlImage,
+                    food.numOfRating,
+                    food.rating
+                )
 
                 // update item :
-                myAdapter.updateFood( newFood, position )
+                myAdapter.updateFood(newFood, position)
 
                 dialog.dismiss()
 

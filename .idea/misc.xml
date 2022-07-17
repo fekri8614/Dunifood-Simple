@@ -6,7 +6,10 @@
         <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/drawable/shape_background_top.xml" value="0.2005" />
         <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/drawable/shape_circle.xml" value="0.2005" />
         <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/item_food.xml" value="0.5" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/dialog_add_new_item.xml" value="0.33" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/dialog_delete_item.xml" value="0.5" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/dialog_update_item.xml" value="0.33" />
+        <entry key="..\:/Users/Klap.ir/Documents/android/AndroidProject/DunifoodSimple/app/src/main/res/layout/item_food.xml" value="0.25" />
       </map>
     </option>
   </component>

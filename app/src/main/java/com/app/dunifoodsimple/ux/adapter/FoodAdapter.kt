@@ -117,8 +117,6 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
 
         fun onFoodLonClicked( food: Food, position: Int )
 
-
-
     }
 
 }

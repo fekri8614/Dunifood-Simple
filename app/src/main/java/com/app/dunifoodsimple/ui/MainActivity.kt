@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dunifoodsimple.databinding.ActivityMainBinding
 import com.app.dunifoodsimple.databinding.DialogAddNewItemBinding
+import com.app.dunifoodsimple.databinding.DialogDeleteItemBinding
 import com.app.dunifoodsimple.ux.adapter.FoodAdapter
 import com.app.dunifoodsimple.ux.dataclass.Food
 import com.app.dunifoodsimple.ux.room.FoodDao
@@ -38,16 +39,24 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         val sharedPreferences = getSharedPreferences("duniFood", Context.MODE_PRIVATE)
         if (sharedPreferences.getBoolean("first_run", true)) {
             firstRun()
-
             sharedPreferences.edit().putBoolean("first_run", false).apply()
         }
 
         showAllData()
 
+        // remove all data from database
+        binding.btnRemoveAllFoods.setOnClickListener {
+            removeAllData()
+        }
+
+    }
+
+    private fun removeAllData() {
+        foodDao.deleteAllFood() // remove all data
+        showAllData() // show data
     }
 
     private fun firstRun() {
-
         val foodList = listOf<Food>(
             Food(
                 txtSubject = "hamburger",
@@ -159,7 +168,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
             )
         )
         foodDao.insertAllFood(foodList)
-
     }
 
     private fun showAllData() {
@@ -169,8 +177,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         binding.recyclerviewMain.adapter = myAdapter
         binding.recyclerviewMain.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
-        Log.v("testLog", foodData.toString())
 
     }
 
@@ -231,20 +237,24 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     }
 
     override fun onFoodLonClicked(food: Food, position: Int) {
-//        val dialog = AlertDialog.Builder(this).create()
-//        val dialogDeleteBinding = DialogDeleteItemBinding.inflate(layoutInflater)
-//        dialog.setView(dialogDeleteBinding.root)
-//        dialog.setCancelable(true)
-//        dialog.show()
-//
-//        dialogDeleteBinding.dialogBtnDeleteCancel.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        dialogDeleteBinding.dialogBtnDeleteYes.setOnClickListener {
-//
-//            dialog.dismiss()
-//
-//            myAdapter.deleteFood(food, position)
-//          }
+
+        val dialog = AlertDialog.Builder(this).create()
+        val dialogDeleteBinding = DialogDeleteItemBinding.inflate(layoutInflater)
+        dialog.setView(dialogDeleteBinding.root)
+        dialog.setCancelable(true)
+        dialog.show()
+
+        dialogDeleteBinding.dialogBtnDeleteCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogDeleteBinding.dialogBtnDeleteYes.setOnClickListener {
+            dialog.dismiss()
+
+            myAdapter.deleteFood(food, position)
+            foodDao.deleteFood(food)
+
+        }
+
     }
 }
+// 225 is done!

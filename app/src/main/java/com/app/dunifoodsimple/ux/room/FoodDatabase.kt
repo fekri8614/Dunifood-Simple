@@ -9,25 +9,22 @@ import com.app.dunifoodsimple.ux.dataclass.Food
 @Database(version = 1, exportSchema = false, entities = [Food::class])
 abstract class FoodDatabase : RoomDatabase() {
 
-    abstract val food: FoodDao
+    abstract val foodDao: FoodDao
 
     companion object {
-
         private var database: FoodDatabase? = null
         fun getDatabase(context: Context): FoodDatabase {
-
-            var instance = database
-            if (instance == null) {
-                instance = Room.databaseBuilder(
+            if (database == null) {
+                database = Room.databaseBuilder(
                     context.applicationContext,
                     FoodDatabase::class.java,
                     "myDatabase.db"
-                ).build()
+                )
+                    .allowMainThreadQueries()
+                    .build()
             }
-
-            return instance
+            return database!!
         }
-
     }
 
 }

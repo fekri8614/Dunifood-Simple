@@ -14,6 +14,12 @@ import com.app.dunifoodsimple.databinding.DialogUpdateItemBinding
 import com.app.dunifoodsimple.ux.adapter.FoodAdapter
 import com.app.dunifoodsimple.ux.dataclass.Food
 
+/*
+* implement Room:
+* 1.Entity
+* 2.Dao
+* */
+
 class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     private lateinit var binding: ActivityMainBinding
     private lateinit var myAdapter: FoodAdapter
@@ -29,114 +35,115 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         *  3. create adapter and viewHolder for recyclerView
         *  4. set adapter to recyclerView and layoutManager
         *  */
+
         val foodList = arrayListOf<Food>(
             Food(
-                "hamburger",
-                "12",
-                "13",
-                "Isfahan",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hamburger_%28black_bg%29.jpg/800px-Hamburger_%28black_bg%29.jpg",
-                20,
-                2.6f
+                txtSubject = "hamburger",
+                txtPrice = "12",
+                txtDistance = "13",
+                txtCity = "Isfahan",
+                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hamburger_%28black_bg%29.jpg/800px-Hamburger_%28black_bg%29.jpg",
+                numOfRating = 20,
+                rating = 2.6f
             ),
             Food(
-                "Cake",
-                "18",
-                "20",
-                "Tehran",
-                "https://upload.wikimedia.org/wikipedia/commons/0/04/Pound_layer_cake.jpg",
-                30,
-                4.12f
+                txtSubject = "Cake",
+                txtPrice = "18",
+                txtDistance = "20",
+                txtCity = "Tehran",
+                urlImage = "https://upload.wikimedia.org/wikipedia/commons/0/04/Pound_layer_cake.jpg",
+                numOfRating = 30,
+                rating = 4.12f
             ),
             Food(
-                "Kebab",
-                "20",
-                "23",
-                "Ardabil",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg/1200px-Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg",
-                100,
-                4.3f
+                txtSubject = "Kebab",
+                txtPrice = "20",
+                txtDistance = "23",
+                txtCity = "Ardabil",
+                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg/1200px-Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg",
+                numOfRating = 100,
+                rating = 4.3f
             ),
             Food(
-                "Cup Cake",
-                "10",
-                "18",
-                "Ardabil",
-                "https://www.noracooks.com/wp-content/uploads/2022/03/sq-3-500x500.jpg",
-                40,
-                3.75f
+                txtSubject = "Cup Cake",
+                txtPrice = "10",
+                txtDistance = "18",
+                txtCity = "Ardabil",
+                urlImage = "https://www.noracooks.com/wp-content/uploads/2022/03/sq-3-500x500.jpg",
+                numOfRating = 40,
+                rating = 3.75f
             ),
             Food(
-                "Sushi",
-                "32",
-                "90",
-                "Tehran",
-                "https://www.kikkoman.com/homecook/search/recipe/img/00005163.jpg",
-                20,
-                4.5f
+                txtSubject = "Sushi",
+                txtPrice = "32",
+                txtDistance = "90",
+                txtCity = "Tehran",
+                urlImage = "https://www.kikkoman.com/homecook/search/recipe/img/00005163.jpg",
+                numOfRating = 20,
+                rating = 4.5f
             ),
             Food(
-                "Bread",
-                "11",
-                "29",
-                "Shanghai",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Fresh_made_bread_05.jpg/1200px-Fresh_made_bread_05.jpg",
-                20,
-                4.5f
+                txtSubject = "Bread",
+                txtPrice = "11",
+                txtDistance = "29",
+                txtCity = "Shanghai",
+                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Fresh_made_bread_05.jpg/1200px-Fresh_made_bread_05.jpg",
+                numOfRating = 20,
+                rating = 4.5f
             ),
             Food(
-                "Fatir",
-                "20",
-                "30",
-                "Pars-Abad",
-                "https://ifpnews.com/wp-content/uploads/2020/04/fatir-9.jpg",
-                80,
-                5.0f
+                txtSubject = "Fatir",
+                txtPrice = "20",
+                txtDistance = "30",
+                txtCity = "Pars-Abad",
+                urlImage = "https://ifpnews.com/wp-content/uploads/2020/04/fatir-9.jpg",
+                numOfRating = 80,
+                rating = 5.0f
             ),
             Food(
-                "Black Halva",
-                "28",
-                "50",
-                "Ardabil",
-                "https://m.media-amazon.com/images/I/51t-VhFIK7L.jpg",
-                50,
-                5.0f
+                txtSubject = "Black Halva",
+                txtPrice = "28",
+                txtDistance = "50",
+                txtCity = "Ardabil",
+                urlImage = "https://m.media-amazon.com/images/I/51t-VhFIK7L.jpg",
+                numOfRating = 50,
+                rating = 5.0f
             ),
             Food(
-                "Yogurt",
-                "12",
-                "20",
-                "Pars-Abad",
-                "https://s3.amazonaws.com/finecooking.s3.tauntonclud.com/app/uploads/2017/04/19000248/051141069-01-homemade-yogurt-recipe-main.jpg",
-                20,
-                4.7f
+                txtSubject = "Yogurt",
+                txtPrice = "12",
+                txtDistance = "20",
+                txtCity = "Pars-Abad",
+                urlImage = "https://s3.amazonaws.com/finecooking.s3.tauntonclud.com/app/uploads/2017/04/19000248/051141069-01-homemade-yogurt-recipe-main.jpg",
+                numOfRating = 20,
+                rating = 4.7f
             ),
             Food(
-                "Gorme Sabzi",
-                "30",
-                "23",
-                "Shiraz",
-                "https://arga-mag.com/file/img/2019/10/Ghormeh-sabzi-recipe.jpg",
-                30,
-                5.0f
+                txtSubject = "Gorme Sabzi",
+                txtPrice = "30",
+                txtDistance = "23",
+                txtCity = "Shiraz",
+                urlImage = "https://arga-mag.com/file/img/2019/10/Ghormeh-sabzi-recipe.jpg",
+                numOfRating = 30,
+                rating = 5.0f
             ),
             Food(
-                "Milk",
-                "12",
-                "20",
-                "Tabriz",
-                "https://th-thumbnailer.cdn-si-edu.com/DxqNnKhkIiGNJ_qtxy86XeqxcgY=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/6f/6e/6f6e0661-8a07-43f6-ba5c-94f0e5855dbe/istock_000005534054_large.jpg",
-                70,
-                4.8f
+                txtSubject = "Milk",
+                txtPrice = "12",
+                txtDistance = "20",
+                txtCity = "Tabriz",
+                urlImage = "https://th-thumbnailer.cdn-si-edu.com/DxqNnKhkIiGNJ_qtxy86XeqxcgY=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/6f/6e/6f6e0661-8a07-43f6-ba5c-94f0e5855dbe/istock_000005534054_large.jpg",
+                numOfRating = 70,
+                rating = 4.8f
             ),
             Food(
-                "Spaghetti",
-                "20",
-                "10",
-                "Ardabil",
-                "https://veganwithgusto.com/wp-content/uploads/2021/05/speedy-spaghetti-arrabbiata-featured-e1649949762421.jpg",
-                30,
-                4.8f
+                txtSubject = "Spaghetti",
+                txtPrice = "20",
+                txtDistance = "10",
+                txtCity = "Ardabil",
+                urlImage = "https://veganwithgusto.com/wp-content/uploads/2021/05/speedy-spaghetti-arrabbiata-featured-e1649949762421.jpg",
+                numOfRating = 30,
+                rating = 4.8f
             )
         )
         myAdapter = FoodAdapter(foodList.clone() as ArrayList<Food>, this)
@@ -178,13 +185,13 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                     val urlPic = foodList[randomForUrl].urlImage
 
                     val newFood = Food(
-                        txtName,
-                        txtPrice,
-                        txtDistance,
-                        txtCity,
-                        urlPic,
-                        txtRatingNumber,
-                        ratingBarStar
+                        txtSubject = txtName,
+                        txtPrice = txtPrice,
+                        txtDistance = txtDistance,
+                        txtCity = txtCity,
+                        urlImage = urlPic,
+                        numOfRating = txtRatingNumber,
+                        rating = ratingBarStar
                     )
                     myAdapter.addFood(newFood)
 
@@ -206,10 +213,10 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                 // filter data 'h'
                 val cloneList = foodList.clone() as ArrayList<Food>
                 val filteredList = cloneList.filter { foodItem ->
-                    foodItem.txtSubject.contains( editTextInput )
+                    foodItem.txtSubject.contains(editTextInput)
                 }
 
-                myAdapter.setData( ArrayList( filteredList ) )
+                myAdapter.setData(ArrayList(filteredList))
 
 
             } else {
@@ -257,13 +264,13 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
 
                 //create new food to add to recyclerview
                 val newFood = Food(
-                    txtName,
-                    txtPrice,
-                    txtDistance,
-                    txtCity,
-                    food.urlImage,
-                    food.numOfRating,
-                    food.rating
+                    txtSubject = txtName,
+                    txtPrice = txtPrice,
+                    txtDistance = txtDistance,
+                    txtCity = txtCity,
+                    urlImage = food.urlImage,
+                    numOfRating = food.numOfRating,
+                    rating = food.rating
                 )
 
                 // update item :

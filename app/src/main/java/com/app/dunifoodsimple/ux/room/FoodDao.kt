@@ -6,14 +6,17 @@ import com.app.dunifoodsimple.ux.dataclass.Food
 @Dao
 interface FoodDao {
 
-    @Insert
-    fun insertFood(food: Food)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdate(food: Food)
+
+//    @Insert
+//    fun insertFood(food: Food)
 
     @Insert
     fun insertAllFood(data: List<Food>)
 
-    @Update
-    fun updateFood(food: Food)
+//    @Update
+//    fun updateFood(food: Food)
 
     @Delete
     fun deleteFood(food: Food)

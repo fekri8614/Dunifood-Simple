@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     }
 
     private fun addNewFood() {
-
         val dialog = AlertDialog.Builder(this).create()
 
         val dialogBinding = DialogAddNewItemBinding.inflate(layoutInflater)
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                 )
 
                 myAdapter.addFood(newFood)
-                foodDao.insertFood( newFood )
+                foodDao.insertOrUpdate(newFood)
 
                 dialog.dismiss()
                 binding.recyclerviewMain.scrollToPosition(0)
@@ -105,7 +104,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
             }
 
         }
-
     }
 
     private fun removeAllData() {
@@ -245,6 +243,7 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         dialog.setCancelable(true)
         dialog.show()
 
+        // set each text
         dialogUpdateItemBinding.dialogEdtFoodName.setText(food.txtSubject)
         dialogUpdateItemBinding.dialogEdtFoodCity.setText(food.txtCity)
         dialogUpdateItemBinding.dialogEdtFoodDistance.setText(food.txtDistance)
@@ -270,6 +269,7 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
 
                 //create new food to add to recyclerview
                 val newFood = Food(
+                    id = food.id,
                     txtSubject = txtName,
                     txtPrice = txtPrice,
                     txtDistance = txtDistance,
@@ -279,10 +279,15 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
                     rating = food.rating
                 )
 
-                // update item :
+                // update item in adapter -->
                 myAdapter.updateFood(newFood, position)
 
+                // update item in database -->
+                foodDao.insertOrUpdate(newFood)
+
+                // dismiss the alertdialog after updating -->
                 dialog.dismiss()
+
             } else {
                 Toast.makeText(this, "Please, fill out all :-)", Toast.LENGTH_SHORT).show()
             }
@@ -309,5 +314,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
             myAdapter.deleteFood(food, position)
             foodDao.deleteFood(food)
         }
+
     }
 }

@@ -69,9 +69,7 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-
         holder.bindData(position)
-
     }
 
     override fun getItemCount(): Int {
@@ -82,32 +80,28 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
         // add food to list
         data.add( 0, newFood )
         notifyItemInserted( 0 )
-
     }
+
     fun deleteFood( oldFood: Food, oldPosition: Int ) {
         // remove item from list :
         data.remove( oldFood )
         notifyItemRemoved( oldPosition )
-
     }
+
     fun updateFood(newFood: Food, position: Int) {
         //update item from list :
         data[position] = newFood
         notifyItemChanged( position )
     }
     fun setData(newList: ArrayList<Food>) {
-
         // set new data to list :
         data.clear()
         data.addAll( newList )
 
         notifyDataSetChanged()
-
     }
 
-
     interface FoodEvents {
-
         // 1. create interface in adapter
         // 2. get an object of interface in args of adapter
         // 3. fill ( call ) objects of interface with your data

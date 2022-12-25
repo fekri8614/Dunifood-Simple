@@ -13,21 +13,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.dunifoodsimple.databinding.ActivityMainBinding
 import com.app.dunifoodsimple.databinding.DialogAddNewItemBinding
 import com.app.dunifoodsimple.databinding.DialogDeleteItemBinding
+import com.app.dunifoodsimple.databinding.DialogUpdateItemBinding
 import com.app.dunifoodsimple.ux.adapter.FoodAdapter
 import com.app.dunifoodsimple.ux.dataclass.Food
 import com.app.dunifoodsimple.ux.room.FoodDao
 import com.app.dunifoodsimple.ux.room.FoodDatabase
 
 /*
-* implement Room:
-* 1.Entity
-* 2.Dao
-* */
+ * implement Room:
+ * 1.Entity
+ * 2.Dao
+ * */
 
 class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     private lateinit var binding: ActivityMainBinding
     private lateinit var myAdapter: FoodAdapter
-    lateinit var foodDao: FoodDao
+    private lateinit var foodDao: FoodDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +44,10 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         }
 
         showAllData()
-
         // remove all data from database
         binding.btnRemoveAllFoods.setOnClickListener {
             removeAllData()
         }
-
     }
 
     private fun removeAllData() {
@@ -177,62 +176,60 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         binding.recyclerviewMain.adapter = myAdapter
         binding.recyclerviewMain.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
     }
 
     override fun onFoodClicked(food: Food, position: Int) {
-//
-//        val dialog = AlertDialog.Builder(this).create()
-//
-//        val dialogUpdateItemBinding = DialogUpdateItemBinding.inflate(layoutInflater)
-//        dialog.setView(dialogUpdateItemBinding.root)
-//        dialog.setCancelable(true)
-//        dialog.show()
-//
-//        dialogUpdateItemBinding.dialogEdtFoodName.setText(food.txtSubject)
-//        dialogUpdateItemBinding.dialogEdtFoodCity.setText(food.txtCity)
-//        dialogUpdateItemBinding.dialogEdtFoodDistance.setText(food.txtDistance)
-//        dialogUpdateItemBinding.dialogEdtFoodPrice.setText(food.txtPrice)
-//
-//        dialogUpdateItemBinding.dialogUpdateBtnCancel.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//
-//        dialogUpdateItemBinding.dialogUpdateBtnUpdate.setOnClickListener {
-//
-//            if (
-//                dialogUpdateItemBinding.dialogEdtFoodName.length() > 0 &&
-//                dialogUpdateItemBinding.dialogEdtFoodCity.length() > 0 &&
-//                dialogUpdateItemBinding.dialogEdtFoodDistance.length() > 0 &&
-//                dialogUpdateItemBinding.dialogEdtFoodPrice.length() > 0
-//            ) {
-//
-//                val txtName = dialogUpdateItemBinding.dialogEdtFoodName.text.toString()
-//                val txtPrice = dialogUpdateItemBinding.dialogEdtFoodPrice.text.toString()
-//                val txtDistance = dialogUpdateItemBinding.dialogEdtFoodDistance.text.toString()
-//                val txtCity = dialogUpdateItemBinding.dialogEdtFoodCity.text.toString()
-//
-//                //create new food to add to recyclerview
-//                val newFood = Food(
-//                    txtSubject = txtName,
-//                    txtPrice = txtPrice,
-//                    txtDistance = txtDistance,
-//                    txtCity = txtCity,
-//                    urlImage = food.urlImage,
-//                    numOfRating = food.numOfRating,
-//                    rating = food.rating
-//                )
-//
-//                // update item :
-//                myAdapter.updateFood(newFood, position)
-//
-//                dialog.dismiss()
-//
-//            } else {
-//                Toast.makeText(this, "Please, fill out all :-)", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        }
+
+        val dialog = AlertDialog.Builder(this).create()
+
+        val dialogUpdateItemBinding = DialogUpdateItemBinding.inflate(layoutInflater)
+        dialog.setView(dialogUpdateItemBinding.root)
+        dialog.setCancelable(true)
+        dialog.show()
+
+        dialogUpdateItemBinding.dialogEdtFoodName.setText(food.txtSubject)
+        dialogUpdateItemBinding.dialogEdtFoodCity.setText(food.txtCity)
+        dialogUpdateItemBinding.dialogEdtFoodDistance.setText(food.txtDistance)
+        dialogUpdateItemBinding.dialogEdtFoodPrice.setText(food.txtPrice)
+
+        dialogUpdateItemBinding.dialogUpdateBtnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogUpdateItemBinding.dialogUpdateBtnUpdate.setOnClickListener {
+
+            if (
+                dialogUpdateItemBinding.dialogEdtFoodName.length() > 0 &&
+                dialogUpdateItemBinding.dialogEdtFoodCity.length() > 0 &&
+                dialogUpdateItemBinding.dialogEdtFoodDistance.length() > 0 &&
+                dialogUpdateItemBinding.dialogEdtFoodPrice.length() > 0
+            ) {
+
+                val txtName = dialogUpdateItemBinding.dialogEdtFoodName.text.toString()
+                val txtPrice = dialogUpdateItemBinding.dialogEdtFoodPrice.text.toString()
+                val txtDistance = dialogUpdateItemBinding.dialogEdtFoodDistance.text.toString()
+                val txtCity = dialogUpdateItemBinding.dialogEdtFoodCity.text.toString()
+
+                //create new food to add to recyclerview
+                val newFood = Food(
+                    txtSubject = txtName,
+                    txtPrice = txtPrice,
+                    txtDistance = txtDistance,
+                    txtCity = txtCity,
+                    urlImage = food.urlImage,
+                    numOfRating = food.numOfRating,
+                    rating = food.rating
+                )
+
+                // update item :
+                myAdapter.updateFood(newFood, position)
+
+                dialog.dismiss()
+            } else {
+                Toast.makeText(this, "Please, fill out all :-)", Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
     }
 
@@ -247,14 +244,12 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         dialogDeleteBinding.dialogBtnDeleteCancel.setOnClickListener {
             dialog.dismiss()
         }
+
         dialogDeleteBinding.dialogBtnDeleteYes.setOnClickListener {
             dialog.dismiss()
 
             myAdapter.deleteFood(food, position)
             foodDao.deleteFood(food)
-
         }
-
     }
 }
-// 225 is done!

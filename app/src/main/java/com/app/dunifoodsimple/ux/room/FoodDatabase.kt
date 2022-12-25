@@ -8,7 +8,6 @@ import com.app.dunifoodsimple.ux.dataclass.Food
 
 @Database(version = 1, exportSchema = false, entities = [Food::class])
 abstract class FoodDatabase : RoomDatabase() {
-
     abstract val foodDao: FoodDao
 
     companion object {

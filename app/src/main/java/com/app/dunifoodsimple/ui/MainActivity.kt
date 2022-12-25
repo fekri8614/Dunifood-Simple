@@ -25,6 +25,8 @@ import com.app.dunifoodsimple.ux.room.FoodDatabase
  * 2.Dao
  * */
 
+const val BASE_URL_IMAGE = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food"
+
 class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     private lateinit var binding: ActivityMainBinding
     private lateinit var myAdapter: FoodAdapter
@@ -48,6 +50,62 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         binding.btnRemoveAllFoods.setOnClickListener {
             removeAllData()
         }
+
+        binding.btnAddNewFood.setOnClickListener {
+            addNewFood()
+        }
+    }
+
+    private fun addNewFood() {
+
+        val dialog = AlertDialog.Builder(this).create()
+
+        val dialogBinding = DialogAddNewItemBinding.inflate(layoutInflater)
+        dialog.setView(dialogBinding.root)
+        dialog.setCancelable(true)
+        dialog.show()
+
+        dialogBinding.dialogBtnDone.setOnClickListener {
+
+            if (
+                dialogBinding.dialogEdtFoodName.text!!.isNotEmpty() &&
+                dialogBinding.dialogEdtFoodCity.text!!.isNotEmpty() &&
+                dialogBinding.dialogEdtFoodPrice.text!!.isNotEmpty() &&
+                dialogBinding.dialogEdtFoodDistance.text!!.isNotEmpty()
+            ) {
+
+                val txtName = dialogBinding.dialogEdtFoodName.text.toString()
+                val txtCity = dialogBinding.dialogEdtFoodCity.text.toString()
+                val txtPrice = dialogBinding.dialogEdtFoodPrice.text.toString()
+                val txtDistance = dialogBinding.dialogEdtFoodDistance.text.toString()
+                val txtRatingNumber: Int = (1..150).random()
+                val ratingBarStar: Float = (1..5).random().toFloat()
+
+                val randomForUrl = (1 until 12).random()
+                val urlPic = "$BASE_URL_IMAGE$randomForUrl.jpg"
+
+                val newFood = Food(
+                    txtSubject = txtName,
+                    txtCity = txtCity,
+                    txtPrice = txtPrice,
+                    txtDistance = txtDistance,
+                    urlImage = urlPic,
+                    rating = ratingBarStar,
+                    numOfRating = txtRatingNumber
+                )
+
+                myAdapter.addFood(newFood)
+                foodDao.insertFood( newFood )
+
+                dialog.dismiss()
+                binding.recyclerviewMain.scrollToPosition(0)
+
+            } else {
+                Toast.makeText(this, "Please, fill out the blanks", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
     }
 
     private fun removeAllData() {
@@ -56,115 +114,115 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     }
 
     private fun firstRun() {
-        val foodList = listOf<Food>(
+        val foodList = arrayListOf(
             Food(
-                txtSubject = "hamburger",
-                txtPrice = "12",
-                txtDistance = "13",
-                txtCity = "Isfahan",
-                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hamburger_%28black_bg%29.jpg/800px-Hamburger_%28black_bg%29.jpg",
+                txtSubject = "Hamburger",
+                txtPrice = "15",
+                txtDistance = "3",
+                txtCity = "Isfahan, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food1.jpg",
                 numOfRating = 20,
-                rating = 2.6f
+                rating = 4.5f
             ),
             Food(
-                txtSubject = "Cake",
-                txtPrice = "18",
-                txtDistance = "20",
-                txtCity = "Tehran",
-                urlImage = "https://upload.wikimedia.org/wikipedia/commons/0/04/Pound_layer_cake.jpg",
-                numOfRating = 30,
-                rating = 4.12f
-            ),
-            Food(
-                txtSubject = "Kebab",
+                txtSubject = "Grilled fish",
                 txtPrice = "20",
-                txtDistance = "23",
-                txtCity = "Ardabil",
-                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg/1200px-Donner_Kebab%2C_Cologne%2C_Germany_%281057919169%29.jpg",
-                numOfRating = 100,
-                rating = 4.3f
+                txtDistance = "2.1",
+                txtCity = "Tehran, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food2.jpg",
+                numOfRating = 10,
+                rating = 4f
             ),
             Food(
-                txtSubject = "Cup Cake",
+                txtSubject = "Lasania",
+                txtPrice = "40",
+                txtDistance = "1.4",
+                txtCity = "Isfahan, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food3.jpg",
+                numOfRating = 30,
+                rating = 2f
+            ),
+            Food(
+                txtSubject = "pizza",
                 txtPrice = "10",
-                txtDistance = "18",
-                txtCity = "Ardabil",
-                urlImage = "https://www.noracooks.com/wp-content/uploads/2022/03/sq-3-500x500.jpg",
-                numOfRating = 40,
-                rating = 3.75f
+                txtDistance = "2.5",
+                txtCity = "Zahedan, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food4.jpg",
+                numOfRating = 80,
+                rating = 1.5f
             ),
             Food(
                 txtSubject = "Sushi",
-                txtPrice = "32",
-                txtDistance = "90",
-                txtCity = "Tehran",
-                urlImage = "https://www.kikkoman.com/homecook/search/recipe/img/00005163.jpg",
-                numOfRating = 20,
-                rating = 4.5f
-            ),
-            Food(
-                txtSubject = "Bread",
-                txtPrice = "11",
-                txtDistance = "29",
-                txtCity = "Shanghai",
-                urlImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Fresh_made_bread_05.jpg/1200px-Fresh_made_bread_05.jpg",
-                numOfRating = 20,
-                rating = 4.5f
-            ),
-            Food(
-                txtSubject = "Fatir",
                 txtPrice = "20",
-                txtDistance = "30",
-                txtCity = "Pars-Abad",
-                urlImage = "https://ifpnews.com/wp-content/uploads/2020/04/fatir-9.jpg",
-                numOfRating = 80,
-                rating = 5.0f
+                txtDistance = "3.2",
+                txtCity = "Mashhad, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food5.jpg",
+                numOfRating = 200,
+                rating = 3f
             ),
             Food(
-                txtSubject = "Black Halva",
-                txtPrice = "28",
-                txtDistance = "50",
-                txtCity = "Ardabil",
-                urlImage = "https://m.media-amazon.com/images/I/51t-VhFIK7L.jpg",
+                txtSubject = "Roasted Fish",
+                txtPrice = "40",
+                txtDistance = "3.7",
+                txtCity = "Jolfa, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food6.jpg",
                 numOfRating = 50,
-                rating = 5.0f
+                rating = 3.5f
             ),
             Food(
-                txtSubject = "Yogurt",
-                txtPrice = "12",
-                txtDistance = "20",
-                txtCity = "Pars-Abad",
-                urlImage = "https://s3.amazonaws.com/finecooking.s3.tauntonclud.com/app/uploads/2017/04/19000248/051141069-01-homemade-yogurt-recipe-main.jpg",
-                numOfRating = 20,
-                rating = 4.7f
-            ),
-            Food(
-                txtSubject = "Gorme Sabzi",
-                txtPrice = "30",
-                txtDistance = "23",
-                txtCity = "Shiraz",
-                urlImage = "https://arga-mag.com/file/img/2019/10/Ghormeh-sabzi-recipe.jpg",
-                numOfRating = 30,
-                rating = 5.0f
-            ),
-            Food(
-                txtSubject = "Milk",
-                txtPrice = "12",
-                txtDistance = "20",
-                txtCity = "Tabriz",
-                urlImage = "https://th-thumbnailer.cdn-si-edu.com/DxqNnKhkIiGNJ_qtxy86XeqxcgY=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/6f/6e/6f6e0661-8a07-43f6-ba5c-94f0e5855dbe/istock_000005534054_large.jpg",
+                txtSubject = "Fried chicken",
+                txtPrice = "70",
+                txtDistance = "3.5",
+                txtCity = "NewYork, USA",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food7.jpg",
                 numOfRating = 70,
-                rating = 4.8f
+                rating = 2.5f
             ),
             Food(
-                txtSubject = "Spaghetti",
-                txtPrice = "20",
+                txtSubject = "Vegetable salad",
+                txtPrice = "12",
+                txtDistance = "3.6",
+                txtCity = "Berlin, Germany",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food8.jpg",
+                numOfRating = 40,
+                rating = 4.5f
+            ),
+            Food(
+                txtSubject = "Grilled chicken",
+                txtPrice = "10",
+                txtDistance = "3.7",
+                txtCity = "Beijing, China",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food9.jpg",
+                numOfRating = 15,
+                rating = 5f
+            ),
+            Food(
+                txtSubject = "Baryooni",
+                txtPrice = "16",
                 txtDistance = "10",
-                txtCity = "Ardabil",
-                urlImage = "https://veganwithgusto.com/wp-content/uploads/2021/05/speedy-spaghetti-arrabbiata-featured-e1649949762421.jpg",
-                numOfRating = 30,
-                rating = 4.8f
-            )
+                txtCity = "Ilam, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food10.jpg",
+                numOfRating = 28,
+                rating = 4.5f
+            ),
+            Food(
+                txtSubject = "Ghorme Sabzi",
+                txtPrice = "11.5",
+                txtDistance = "7.5",
+                txtCity = "Karaj, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food11.jpg",
+                numOfRating = 27,
+                rating = 5f
+            ),
+            Food(
+                txtSubject = "Rice",
+                txtPrice = "12.5",
+                txtDistance = "2.4",
+                txtCity = "Shiraz, Iran",
+                urlImage = "https://dunijet.ir/YaghootAndroidFiles/DuniFoodSimple/food12.jpg",
+                numOfRating = 35,
+                rating = 2.5f
+            ),
         )
         foodDao.insertAllFood(foodList)
     }

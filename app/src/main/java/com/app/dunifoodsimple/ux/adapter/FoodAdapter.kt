@@ -34,7 +34,6 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
 
         @SuppressLint("SetTextI18n")
         fun bindData(position: Int) {
-
             txtSubject.text = data[position].txtSubject
             txtCity.text = data[position].txtCity
             txtPrice.text = "$" + data[position].txtPrice + " vip"
@@ -49,14 +48,10 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
                 .into(imgMain)
 
             itemView.setOnClickListener {
-
-                foodEvents.onFoodClicked( data[adapterPosition], adapterPosition )
-
+                foodEvents.onFoodClicked(data[adapterPosition], adapterPosition)
             }
             itemView.setOnLongClickListener {
-
-                foodEvents.onFoodLonClicked( data[adapterPosition], adapterPosition )
-
+                foodEvents.onFoodLonClicked(data[adapterPosition], adapterPosition)
                 true
             }
         }
@@ -76,41 +71,42 @@ class FoodAdapter(private val data: ArrayList<Food>, private val foodEvents: Foo
         return data.size
     }
 
-    fun addFood( newFood: Food ) {
+    fun addFood(newFood: Food) {
         // add food to list
-        data.add( 0, newFood )
-        notifyItemInserted( 0 )
+        data.add(0, newFood)
+        notifyItemInserted(0)
     }
 
-    fun deleteFood( oldFood: Food, oldPosition: Int ) {
+    fun deleteFood(oldFood: Food, oldPosition: Int) {
         // remove item from list :
-        data.remove( oldFood )
-        notifyItemRemoved( oldPosition )
+        data.remove(oldFood)
+        notifyItemRemoved(oldPosition)
     }
 
     fun updateFood(newFood: Food, position: Int) {
         //update item from list :
         data[position] = newFood
-        notifyItemChanged( position )
+        notifyItemChanged(position)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newList: ArrayList<Food>) {
         // set new data to list :
         data.clear()
-        data.addAll( newList )
-
+        data.addAll(newList)
         notifyDataSetChanged()
     }
 
     interface FoodEvents {
-        // 1. create interface in adapter
-        // 2. get an object of interface in args of adapter
-        // 3. fill ( call ) objects of interface with your data
-        // 4. implementation
+        /*
+         * 1. create interface in adapter
+         * 2. get an object of interface in args of adapter
+         * 3. fill ( call ) objects of interface with your data
+         * 4. implementation
+         */
 
         fun onFoodClicked(food: Food, position: Int)
-
-        fun onFoodLonClicked( food: Food, position: Int )
-
+        fun onFoodLonClicked(food: Food, position: Int)
     }
 
 }

@@ -6,6 +6,7 @@ import com.app.dunifoodsimple.ux.dataclass.Food
 @Dao
 interface FoodDao {
 
+    // search and insert items (together) -->
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdate(food: Food)
 

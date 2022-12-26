@@ -1,13 +1,11 @@
 package com.app.dunifoodsimple.ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dunifoodsimple.databinding.ActivityMainBinding
@@ -54,6 +52,25 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
         binding.btnAddNewFood.setOnClickListener {
             addNewFood()
         }
+
+        // search data | database
+        binding.edtSearch.addTextChangedListener { editTextInput ->
+            searchOnDatabase(editTextInput!!.toString())
+        }
+    }
+
+    private fun searchOnDatabase(editTextInput: String) {
+
+        if (editTextInput.isNotEmpty()) {
+            // filter data 'h'
+            val searchedData = foodDao.searchFoods(editTextInput)
+            myAdapter.setData(ArrayList(searchedData))
+        } else {
+            // show all data -->
+            val data = foodDao.getAllFood()
+            myAdapter.setData(ArrayList(data))
+        }
+
     }
 
     private fun addNewFood() {
@@ -109,6 +126,15 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
     private fun removeAllData() {
         foodDao.deleteAllFood() // remove all data
         showAllData() // show data
+    }
+
+    private fun showAllData() {
+        val foodData = foodDao.getAllFood()
+
+        myAdapter = FoodAdapter(ArrayList(foodData), this)
+        binding.recyclerviewMain.adapter = myAdapter
+        binding.recyclerviewMain.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
     private fun firstRun() {
@@ -223,15 +249,6 @@ class MainActivity : AppCompatActivity(), FoodAdapter.FoodEvents {
             ),
         )
         foodDao.insertAllFood(foodList)
-    }
-
-    private fun showAllData() {
-        val foodData = foodDao.getAllFood()
-
-        myAdapter = FoodAdapter(ArrayList(foodData), this)
-        binding.recyclerviewMain.adapter = myAdapter
-        binding.recyclerviewMain.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
     override fun onFoodClicked(food: Food, position: Int) {
